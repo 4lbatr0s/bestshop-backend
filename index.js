@@ -18,7 +18,7 @@ app.use(express.json()); //INFO: how to helps api to understand JSON format.
 
 //INFO: use routes
 app.use("/api", mainRoute);
-app.use("/api/user", userRoute);
+app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
 
 

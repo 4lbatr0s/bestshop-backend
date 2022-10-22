@@ -2,9 +2,7 @@ const router = require("express").Router();
 const User = require("../models/User");
 const cryptojs = require("crypto-js");
 const dotenv = require('dotenv');
-
-const ErrorMessages = require('../utilities/ErrorMessages');
-
+const jwt = require('jsonwebtoken');
 
 dotenv.config();
 
@@ -38,15 +36,26 @@ router.post("/register", async (req,res) => {
 router.post("/login",  async (req, res) => {
     try {
         const user = await User.findOne({username:req.body.username});
-        !user && res.status(401).json(ErrorMessages.WRONG_CREDENTIALS);
+        !user && res.status(401).json("WRONG_CREDENTIALS");
 
         const decryptedPassword = cryptojs
         .AES
-        .decrypt(user.password, process.env.SECRET_PASSPHRASE) //INFO: how to decrypt a password!
-        const password = decryptedPassword.toString(cryptojs.enc.Utf8); 
-        password !== req.body.password &&  res.status(401).json(ErrorMessages.WRONG_CREDENTIALS);
+        .decrypt(user.password, process.env.SECRET_PASSPHRASE)
+        .toString(cryptojs.enc.Utf8);  //INFO: how to decrypt a password!
+        decryptedPassword !== req.body.password &&  res.status(401).json("WRONG_CREDENTIALS");
+ 
+        const {password, ...others} = user._doc; //INFO: Dto, choose what you want to send as a response, we use __doc research!
 
-        res.status(200).json(user);
+        //INFO: how to create a jsonwebtoken, if we send our true credentials, then create jsonwebtoken
+        const accessToken = jwt.sign({
+            id:user._id,
+            isAdmin: user.isAdmin
+        }, 
+        process.env.JWT_SECRET_KEY,
+        {expiresIn:'3d'});
+
+        res.status(200).json({...others, accessToken});//INFO: how to send accessToken
+
     }catch (err){
         res.status(500).json(err);
     }
