@@ -1,0 +1,1 @@
+WRONG_CREDENTIALS = "Wrong credentials"
