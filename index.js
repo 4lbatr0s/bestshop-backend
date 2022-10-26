@@ -11,6 +11,9 @@ dotenv.config();//INFO:How to reach dotenv configuration
 const userRoute = require("./routes/user");
 const mainRoute = require("./routes/index");
 const authRoute = require("./routes/auth");
+const productRoute = require("./routes/product");
+const cartRoute = require("./routes/cart");
+const orderRoute = require("./routes/order");
 
 //app.use = Middlewares
 app.use(express.json()); //INFO: how to helps api to understand JSON format.
@@ -20,6 +23,9 @@ app.use(express.json()); //INFO: how to helps api to understand JSON format.
 app.use("/api", mainRoute);
 app.use("/api/users", userRoute);
 app.use("/api/auth", authRoute);
+app.use("/api/products", productRoute);
+app.use("/api/orders", orderRoute);
+app.use("/api/carts", cartRoute);
 
 
 mongoose

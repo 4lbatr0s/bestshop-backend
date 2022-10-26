@@ -25,8 +25,9 @@ router.post("/register", async (req,res) => {
     })                  //INFO: how to save encrypted password in database.
 
     try {
-        const savedUser = await newUser.save();
-        res.status(201).json(savedUser); //INFO: status 201 successfully added!
+        const savedUser = await newUser.    save();
+        const {password, ...others} = savedUser._doc;
+        res.status(201).json(others); //INFO: status 201 successfully added!
     } catch(err) {
         res.status(500).json(err);
     }
