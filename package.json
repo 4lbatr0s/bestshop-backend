@@ -10,6 +10,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.5",
     "crypto-js": "^4.1.1",
     "cryptojs": "^2.5.3",
     "dotenv": "^16.0.3",
@@ -17,6 +18,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.6.7",
     "nodemon": "^2.0.20",
-    "stripe": "^10.15.0"
+    "stripe": "^10.15.0",
+    "swagger-ui-express": "^4.5.0"
   }
 }
