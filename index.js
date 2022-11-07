@@ -45,5 +45,5 @@ mongoose
 
 
 app.listen(5000, ()=> {
-    console.log("backend server is running at ");
+    console.log("backend server is running at:", 5000);
 })

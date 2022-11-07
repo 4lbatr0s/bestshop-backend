@@ -49,10 +49,10 @@ router.delete("/:id", verifyTokenAndAdmin, async (req,res)=> {
 //TIP: Everybody can reach the products..
 router.get("/find/:id", async (req,res) => {
     try {
-        const product = await User.findById(req.params.id);
+        const product = await Product.findById(req.params.id);
         res.status(200).json(product);
     } catch (error) {
-        res.status(500).json(err);
+        res.status(500).json(error);
     }
 })
 
