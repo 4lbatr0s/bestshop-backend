@@ -34,6 +34,10 @@ router.post("/register", async (req,res) => {
    
 })
 
+/**
+ * @param {String} username 
+ * @param {String} password  
+ */
 router.post("/login",  async (req, res) => {
     try {
         const user = await User.findOne({username:req.body.username});

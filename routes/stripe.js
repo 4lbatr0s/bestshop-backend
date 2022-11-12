@@ -5,8 +5,8 @@ const stripe = require('stripe')(process.env.STRIPE_KEY); //INFO: How to use str
 //INFO: How to charge a client!
 router.post("/payment", (req,res)=> {
     stripe.charges.create({
-        source:req.body.tokenId, //INFO: when we send a stripe(stripe will be used in the frontend too..) payment from UI, stripe returns us a tokenId, we send that token to backend.
-        amount: req.body.amount,
+        source: req.body.params ? req.body.params.tokenId : req.body.tokenId, //INFO: when we send a stripe(stripe will be used in the frontend too..) payment from UI, stripe returns us a tokenId, we send that token to backend.
+        amount: req.body.params ? req.body.params.amount : req.body.amount,
         currency:"usd"
     }, (stripeErr, stripeRes)=> {
         if(stripeErr){
