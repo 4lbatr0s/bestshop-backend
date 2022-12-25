@@ -50,7 +50,6 @@ router.post("/login",  async (req, res) => {
         decryptedPassword !== req.body.password &&  res.status(401).json("WRONG_CREDENTIALS");
  
         const {password, ...others} = user._doc; //INFO: Dto, choose what you want to send as a response, we use __doc research!
-
         //INFO: how to create a jsonwebtoken, if we send our true credentials, then create jsonwebtoken
         const accessToken = jwt.sign({
             id:user._id,

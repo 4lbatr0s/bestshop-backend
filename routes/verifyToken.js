@@ -5,7 +5,7 @@ dotenv.config();
 
 //INFO: token verification middleware
 const verifyToken = (req,res, next) => {
-    const authHeader = req.headers.token 
+    const authHeader = req.headers.token
     const token = authHeader.split(" ")[1] //INFO: Bearer km2kmLJWLAML....
     if(authHeader) { //INFO: err,user => if everything is okey, verifyTOken will return us a DATA, you can name it whatever you like we called it user here.
         jwt.verify(token, process.env.JWT_SECRET_KEY, (err,user)=> {

@@ -54,12 +54,15 @@ router.get("/find/:id", verifyTokenAndAdmin, async (req,res) => {
 
 //GET ALL USERS
 router.get("/", verifyTokenAndAdmin, async (req,res) => {
+    const query = req.query.new;
+    //INFO: Bring 'last NEW' number of users.
     try {
-        const query = req.query.new; //INFO: Bring 'last NEW' number of users.
-        const users = await User
+        
+        const users = query ? await User
         .find() //INFO: How to sort and limit MongoDB queries..
         .sort({_id:-1}) //sort by id descending! 
-        .limit(5);
+        .limit(5)
+        : await User.find();
         res.status(200).json(users);//TODO: Do not return passwords.
     } catch (error) {
         res.status(500).json(err);
