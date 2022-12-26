@@ -80,13 +80,16 @@ router.get("/", verifyTokenAndAdmin, async(req, res)=> {
 //STATS:
 //INFO: How to create get monthly income data stats:
 router.get("/income", verifyTokenAndAdmin, async (req, res) => {
+    const productId = req.query.pid;
     const date = new Date();
     const lastMonth= new Date(date.setMonth(date.getMonth()-1));
     const previousMonth = new Date (date.setMonth(lastMonth.getMonth()-1));
 
     try {
         const income = await Order.aggregate([
-            {$match: {createdAt:{$gte:previousMonth}}},
+            {$match: {createdAt:{$gte:previousMonth}}, ...(productId && { //INFO: if productId is not null, create another query.
+                products:{$elementMatch:{productId:productId}}
+            })},
             {$project: {
                 month:{$month:"$createdAt"},
                 sales:"$amount"
